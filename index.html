@@ -5,18 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>붉은사막 파밍 가이드</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="page-shell">
     <header class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">Crimson Desert Farming Guide Prototype</p>
-        <h1>붉은사막 파밍 포인트를 맵 위에 직접 찍는 가이드 앱</h1>
-        <p class="hero-text">
-          유튜브 공략 영상을 근거로 아이템, 스킬, 탈것, 편의성 루트를 맵 위에 정리하는 형태의 MVP입니다.
-          현재는 실제 영상 기반 항목을 1차 반영했고, 좌표는 프레임 검수에 따라 계속 정밀화할 수 있게 구성했습니다.
+        <p id="heroEyebrow" class="eyebrow">Crimson Desert Field Atlas</p>
+        <h1 id="heroTitle">유튜브 공략을 월드맵 좌표로 번역한 붉은사막 파밍 아틀라스</h1>
+        <p id="heroText" class="hero-text">
+          파이웰 전체지도 위에 무기, 장신구, 편의 아이템, 전설 탈것 루트를 정리했습니다. 실제 월드 좌표가 확인된 포인트는 검증 마커로 고정하고, 아직 분해가 덜 된 항목은 영상 챕터 기반 연구 포인트로 남겨두었습니다.
         </p>
+        <div id="heroHighlights" class="hero-highlights"></div>
+        <p id="heroNote" class="hero-note"></p>
       </div>
       <div class="hero-stats" id="heroStats"></div>
     </header>
@@ -24,7 +27,7 @@
     <section class="toolbar">
       <label class="search-field">
         <span>아이템 / 재료 검색</span>
-        <input id="searchInput" type="search" placeholder="예: 가죽, 철광석, 버섯">
+        <input id="searchInput" type="search" placeholder="예: 검은 운명, 로일러, 특대형 가방">
       </label>
 
       <div class="toolbar-group">
@@ -59,15 +62,16 @@
         <div class="panel-header">
           <div>
             <p class="panel-kicker">Map Overview</p>
-            <h2>파밍 맵</h2>
+            <h2>파이웰 전체지도</h2>
           </div>
-          <p class="panel-note">현재 일부 마커는 유튜브 챕터와 설명문 기준의 임시 좌표입니다. 실제 게임 맵 캡처와 대조해 좌표를 보정하면 됩니다.</p>
+          <p id="mapNote" class="panel-note">공개 커뮤니티 맵 타일을 재구성한 실제 월드 지도를 표시합니다. 일부 포인트는 아직 영상 기반 연구 좌표이며, 검증 마커는 월드 좌표를 현재 지도에 투영한 값입니다.</p>
         </div>
 
         <div id="mapBoard" class="map-board">
-          <img class="map-image" src="assets/pywel-placeholder-map.svg" alt="붉은사막 샘플 맵">
+          <img id="mapImage" class="map-image" src="assets/pywel-main-world-z11.jpg" alt="붉은사막 파이웰 전체지도" draggable="false">
           <div id="mapMarkers" class="marker-layer" aria-live="polite"></div>
         </div>
+        <div id="mapCaption" class="map-caption"></div>
 
         <div id="legend" class="legend"></div>
       </section>
@@ -75,8 +79,8 @@
       <aside class="detail-panel">
         <div class="panel-header">
           <div>
-            <p class="panel-kicker">Spot Details</p>
-            <h2>위치 설명</h2>
+            <p class="panel-kicker">Spot Briefing</p>
+            <h2>루트 브리핑</h2>
           </div>
         </div>
         <div id="detailCard" class="detail-card"></div>
@@ -85,8 +89,8 @@
       <section class="list-panel">
         <div class="panel-header">
           <div>
-            <p class="panel-kicker">Farming Routes</p>
-            <h2>파밍 포인트 목록</h2>
+            <p class="panel-kicker">Research Board</p>
+            <h2>파밍 포인트 보드</h2>
           </div>
           <p id="resultsCount" class="panel-note"></p>
         </div>

@@ -12,6 +12,11 @@ const state = {
 };
 
 const elements = {
+  heroEyebrow: document.getElementById("heroEyebrow"),
+  heroTitle: document.getElementById("heroTitle"),
+  heroText: document.getElementById("heroText"),
+  heroHighlights: document.getElementById("heroHighlights"),
+  heroNote: document.getElementById("heroNote"),
   heroStats: document.getElementById("heroStats"),
   searchInput: document.getElementById("searchInput"),
   categoryChips: document.getElementById("categoryChips"),
@@ -20,6 +25,9 @@ const elements = {
   exportOverrides: document.getElementById("exportOverrides"),
   importOverrides: document.getElementById("importOverrides"),
   importOverridesInput: document.getElementById("importOverridesInput"),
+  mapImage: document.getElementById("mapImage"),
+  mapNote: document.getElementById("mapNote"),
+  mapCaption: document.getElementById("mapCaption"),
   mapBoard: document.getElementById("mapBoard"),
   mapMarkers: document.getElementById("mapMarkers"),
   detailCard: document.getElementById("detailCard"),
@@ -94,6 +102,10 @@ function formatCoordinate(value) {
   return Number(value).toFixed(1);
 }
 
+function formatWorldCoordinate(value) {
+  return Number(value).toFixed(6);
+}
+
 function getCategoryMeta(categoryId) {
   return data.categories.find((category) => category.id === categoryId) ?? data.categories[0];
 }
@@ -157,12 +169,63 @@ function buildSearchHaystack(spot) {
     spot.mapping?.status,
     spot.mapping?.basis,
     spot.mapping?.note,
+    spot.worldCoordinates?.matchedLabel,
+    spot.worldCoordinates?.sourceLabel,
     ...itemTokens,
     ...sourceTokens
   ]
     .filter(Boolean)
     .join(" ")
     .toLowerCase();
+}
+
+function renderMeta() {
+  const meta = data.meta ?? {};
+  const map = data.map ?? {};
+
+  document.title = meta.title ?? document.title;
+
+  if (elements.heroEyebrow) {
+    elements.heroEyebrow.textContent = meta.eyebrow ?? "Crimson Desert Field Atlas";
+  }
+
+  if (elements.heroTitle) {
+    elements.heroTitle.textContent = meta.headline ?? meta.title ?? "";
+  }
+
+  if (elements.heroText) {
+    elements.heroText.textContent = meta.subtitle ?? "";
+  }
+
+  if (elements.heroHighlights) {
+    elements.heroHighlights.innerHTML = (meta.highlights ?? [])
+      .map((highlight) => `<span class="hero-badge">${highlight}</span>`)
+      .join("");
+  }
+
+  if (elements.heroNote) {
+    elements.heroNote.textContent = [meta.evidenceNote, meta.desktopNote].filter(Boolean).join(" ");
+  }
+
+  if (elements.mapImage && map.image) {
+    elements.mapImage.src = map.image;
+    elements.mapImage.alt = map.alt ?? map.name ?? "붉은사막 월드 지도";
+  }
+
+  if (elements.mapNote) {
+    elements.mapNote.textContent = map.note ?? "";
+  }
+
+  if (elements.mapCaption) {
+    const sourceLink = map.sourceUrl
+      ? `<a href="${map.sourceUrl}" target="_blank" rel="noreferrer">${map.sourceLabel ?? "원본 맵 보기"}</a>`
+      : "";
+
+    elements.mapCaption.innerHTML = [map.name, map.dimensions, map.updatedAt ? `업데이트 ${map.updatedAt}` : "", sourceLink]
+      .filter(Boolean)
+      .map((value) => `<span>${value}</span>`)
+      .join("");
+  }
 }
 
 function getVisibleSpots() {
@@ -254,6 +317,7 @@ function getCoordinateSnapshot(spot) {
         x: Number(formatCoordinate(spot.coordinates.x)),
         y: Number(formatCoordinate(spot.coordinates.y))
       },
+      worldCoordinates: spot.worldCoordinates ?? null,
       localMappingStatus: override?.mappingStatus ?? null,
       verifiedAt: getDisplayedVerifiedAt(spot),
       mapping: {
@@ -379,15 +443,17 @@ function renderHeroStats(visibleSpots) {
   const categoriesInView = new Set(visibleSpots.map((spot) => spot.category));
   const sourceBackedCount = visibleSpots.filter((spot) => (spot.sources ?? []).length > 0).length;
   const itemCount = visibleSpots.reduce((count, spot) => count + (spot.items?.length ?? 0), 0);
-  const overrideCount = Object.keys(state.overrides).length;
+  const worldAnchoredCount = visibleSpots.filter((spot) => Boolean(spot.worldCoordinates)).length;
+  const provisionalCount = visibleSpots.length - worldAnchoredCount;
   const confirmedCount = Object.values(state.overrides).filter((override) => override.mappingStatus === "좌표 확정").length;
 
   const cards = [
     { label: "표시 중인 포인트", value: `${visibleSpots.length}개` },
     { label: "포함 카테고리", value: `${categoriesInView.size}종` },
+    { label: "월드 좌표 반영", value: `${worldAnchoredCount}곳` },
+    { label: "연구용 임시 포인트", value: `${provisionalCount}곳` },
     { label: "정리된 아이템", value: `${itemCount}개` },
     { label: "출처 연결 포인트", value: `${sourceBackedCount}곳` },
-    { label: "로컬 좌표 보정", value: `${overrideCount}건` },
     { label: "좌표 확정 마커", value: `${confirmedCount}건` }
   ];
 
@@ -451,7 +517,7 @@ function renderMappingToggle() {
 }
 
 function renderLegend() {
-  elements.legend.innerHTML = data.categories
+  const categoryLegend = data.categories
     .filter((category) => category.id !== "all")
     .map(
       (category) => `
@@ -462,6 +528,19 @@ function renderLegend() {
       `
     )
     .join("");
+
+  const statusLegend = `
+    <span>
+      <i class="legend-ring"></i>
+      월드 좌표 반영
+    </span>
+    <span>
+      <i class="legend-dash"></i>
+      영상 기반 임시 좌표
+    </span>
+  `;
+
+  elements.legend.innerHTML = categoryLegend + statusLegend;
 }
 
 function renderMapMarkers(visibleSpots) {
@@ -478,7 +557,7 @@ function renderMapMarkers(visibleSpots) {
   elements.mapMarkers.innerHTML = visibleSpots
     .map((spot) => {
       const activeClass = spot.id === state.selectedSpotId ? "active" : "";
-      const mappingClass = spot.mapping?.status === "좌표 확정" ? "mapped" : "provisional";
+      const mappingClass = spot.worldCoordinates ? "mapped world-verified" : "provisional";
       const overrideClass = state.overrides[spot.id] ? "edited" : "";
       const localStatusClass = getLocalMappingStatus(spot.id) === "좌표 확정" ? "confirmed" : "";
 
@@ -568,6 +647,18 @@ function renderMappingSection(spot) {
   const localMappingStatus = getLocalMappingStatus(spot.id);
   const displayedVerifiedAt = getDisplayedVerifiedAt(spot);
   const coordinateSnapshot = getCoordinateSnapshot(spot);
+  const worldCoordinatesMarkup = spot.worldCoordinates
+    ? `
+      <div class="detail-grid">
+        <span class="pill actual">월드 좌표: ${formatWorldCoordinate(spot.worldCoordinates.lat)}, ${formatWorldCoordinate(spot.worldCoordinates.lng)}</span>
+        <span class="pill">매칭 항목: ${spot.worldCoordinates.matchedLabel ?? "미입력"}</span>
+        <span class="pill">좌표 근거: ${spot.worldCoordinates.sourceLabel ?? "미입력"}</span>
+      </div>
+      <p class="mapping-callout">이 포인트는 공개 커뮤니티 맵 좌표를 현재 파이웰 전체지도에 투영한 값입니다.</p>
+    `
+    : `
+      <p class="mapping-callout">아직 실제 월드 좌표가 확인되지 않았습니다. 현재 마커는 유튜브 챕터와 설명문을 바탕으로 둔 연구용 좌표입니다.</p>
+    `;
 
   return `
     <section class="detail-section">
@@ -578,8 +669,10 @@ function renderMappingSection(spot) {
         <span class="pill">보정여부: ${hasOverride ? "로컬 보정됨" : "원본 좌표"}</span>
         <span class="pill">로컬 검수: ${localMappingStatus ?? "미지정"}</span>
         <span class="pill">확인일: ${displayedVerifiedAt ?? "-"}</span>
+        <span class="pill">투영 좌표: ${formatCoordinate(spot.coordinates.x)}, ${formatCoordinate(spot.coordinates.y)}</span>
       </div>
       <p>${mapping.note ?? "지도화 메모가 없습니다."}</p>
+      ${worldCoordinatesMarkup}
     </section>
 
     <section class="detail-section">
@@ -668,6 +761,9 @@ function renderDetailCard(spot) {
 
   const category = getCategoryMeta(spot.category);
   const verification = spot.verification ?? {};
+  const worldCoordinatePill = spot.worldCoordinates
+    ? `<span class="pill actual">월드 좌표: ${formatWorldCoordinate(spot.worldCoordinates.lat)}, ${formatWorldCoordinate(spot.worldCoordinates.lng)}</span>`
+    : `<span class="pill">월드 좌표: 미검증</span>`;
 
   elements.detailCard.innerHTML = `
     <div class="detail-head">
@@ -685,7 +781,8 @@ function renderDetailCard(spot) {
         <span class="pill">지도상태: ${getDisplayedMappingStatus(spot)}</span>
         <span class="pill">신뢰도: ${verification.confidence ?? "미입력"}</span>
         <span class="pill">확인일: ${verification.lastChecked ?? "미입력"}</span>
-        <span class="pill">좌표: ${formatCoordinate(spot.coordinates.x)}, ${formatCoordinate(spot.coordinates.y)}</span>
+        <span class="pill">투영 좌표: ${formatCoordinate(spot.coordinates.x)}, ${formatCoordinate(spot.coordinates.y)}</span>
+        ${worldCoordinatePill}
       </div>
     </div>
 
@@ -734,6 +831,7 @@ function renderSpotList(visibleSpots) {
       const itemNames = getItemNames(spot);
       const verificationStatus = spot.verification?.status ?? "미입력";
       const mappingStatus = getDisplayedMappingStatus(spot);
+      const coordinateStatus = spot.worldCoordinates ? "월드 좌표 반영" : "영상 임시 좌표";
 
       return `
         <article class="spot-card ${activeClass}" data-spot-id="${spot.id}" tabindex="0">
@@ -745,6 +843,7 @@ function renderSpotList(visibleSpots) {
             <span class="pill">${spot.region}</span>
             <span class="pill">${verificationStatus}</span>
             <span class="pill">${mappingStatus}</span>
+            <span class="pill">${coordinateStatus}</span>
           </div>
           <div>
             <h3>${spot.name}</h3>
@@ -763,6 +862,7 @@ function render() {
   const visibleSpots = getVisibleSpots();
   ensureSelectedSpot(visibleSpots);
 
+  renderMeta();
   renderHeroStats(visibleSpots);
   renderCategoryChips();
   renderRegionSelect();

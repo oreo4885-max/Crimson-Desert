@@ -1,8 +1,28 @@
 window.guideData = {
   meta: {
-    title: "붉은사막 파밍 가이드",
-    subtitle: "유튜브 링크를 근거로 정리한 붉은사막 아이템/스킬/탈것 연구용 프로토타입입니다.",
-    evidenceNote: "현재 좌표는 실제 게임 맵 프레임 대조 전의 임시 배치이며, 아이템명/챕터/출처 링크는 실제 영상 기준으로 입력했습니다."
+    title: "붉은사막 파밍 아틀라스",
+    eyebrow: "Crimson Desert Field Atlas",
+    headline: "유튜브 공략을 월드맵 좌표로 번역한 붉은사막 파밍 아틀라스",
+    subtitle: "파이웰 전체지도를 바탕으로 무기, 반지, 편의 아이템, 전설 탈것 루트를 겹쳐 보는 PC용 조사 앱입니다.",
+    evidenceNote: "실제 월드 좌표가 확인된 포인트는 crimsondesert.app 커뮤니티 맵과 유튜브 챕터를 함께 대조해 현재 지도에 투영했습니다.",
+    desktopNote: "모바일 최적화는 제외하고, 넓은 화면에서 빠르게 검토하고 좌표를 보정하는 흐름에 맞춰 구성했습니다.",
+    highlights: ["파이웰 전체지도 반영", "실제 월드 좌표 교차검증", "PC 조사용 레이아웃"]
+  },
+  map: {
+    name: "Pywel Main World",
+    image: "assets/pywel-main-world-z11.jpg",
+    alt: "붉은사막 파이웰 메인 월드 전체지도",
+    sourceLabel: "crimsondesert.app 커뮤니티 맵",
+    sourceUrl: "https://crimsondesert.app/en/map",
+    dimensions: "1006 x 1021",
+    updatedAt: "2026-04-08",
+    note: "공개 Pywel 타일을 재구성한 전체지도입니다. X/Y 좌표는 이 맵 경계에 맞춰 월드 좌표를 투영한 값입니다.",
+    bounds: {
+      minLat: 0.35,
+      maxLat: 1.05,
+      minLng: -1.07,
+      maxLng: -0.38
+    }
   },
   categories: [
     { id: "all", label: "전체", color: "#f6eadc" },
@@ -17,6 +37,8 @@ window.guideData = {
   regions: [
     "전체 지역",
     "지역 다수",
+    "헤르난드",
+    "데메니스",
     "마녀 성소",
     "입문 장비 루트",
     "회색갈기",
@@ -105,20 +127,27 @@ window.guideData = {
       id: "witch-sanctuary-route",
       name: "마녀 성소 / 해적왕 모자 루트",
       category: "system",
-      region: "마녀 성소",
-      coordinates: { x: 35, y: 31 },
+      region: "헤르난드",
+      coordinates: { x: 35.37, y: 75.75 },
+      worldCoordinates: {
+        lat: 0.519773,
+        lng: -0.825938,
+        matchedLabel: "Pirate King Hat",
+        sourceLabel: "crimsondesert.app 커뮤니티 맵"
+      },
       difficulty: "중간",
       recommended: "중반 콘텐츠 준비용",
       respawn: "콘텐츠 주기 확인 필요",
       verification: {
-        status: "복수 영상 교차확인",
-        confidence: "중간",
+        status: "커뮤니티 맵 + 영상 교차확인",
+        confidence: "높음",
         lastChecked: "2026-04-08"
       },
       mapping: {
-        status: "좌표 임시 배치",
-        basis: "챕터 + 콘텐츠 이름",
-        note: "마녀 위치와 성소 루트는 영상상 복수 지점입니다. 실제 맵 캡처에서 마녀별 위치를 다시 분리해 넣는 것이 좋습니다."
+        status: "월드 좌표 반영",
+        basis: "crimsondesert.app 커뮤니티 맵 + 유튜브 챕터",
+        verifiedAt: "2026-04-08",
+        note: "현재 대표 마커는 커뮤니티 맵의 Pirate King Hat 지점을 기준으로 고정했습니다. 마녀 성소와 개별 마녀 위치는 다음 단계에서 별도 마커로 더 잘게 분리하는 것이 좋습니다."
       },
       items: [
         {
@@ -141,7 +170,7 @@ window.guideData = {
         }
       ],
       summary: "마녀 성소, 모든 마녀 위치, 해적왕 모자, 연구소 운영까지 이어지는 중반 핵심 콘텐츠 묶음입니다.",
-      locationGuide: "현재는 마녀 성소 콘텐츠군 전체를 한 점으로 묶은 상태입니다. 실제 사용 단계에서는 마녀별 위치와 성소별 위치를 따로 쪼개는 것이 좋습니다.",
+      locationGuide: "대표 마커는 헤르난드 지역의 해적왕 모자 앵커에 고정했습니다. 마녀 성소 콘텐츠군 전체를 추적하기 위한 시작점으로 쓰고, 실제 사용 단계에서는 마녀별 위치와 성소별 위치를 따로 쪼개는 것이 좋습니다.",
       route: [
         "먼저 선행 퀘스트를 확인하고 모든 마녀 위치를 정리합니다.",
         "성소 진입과 보상 루프를 익힌 뒤 해적왕 모자 획득 구간을 분리 기록합니다.",
@@ -174,20 +203,27 @@ window.guideData = {
       id: "beginner-power-route",
       name: "입문 장비 + 금괴 스타트 루트",
       category: "weapon",
-      region: "입문 장비 루트",
-      coordinates: { x: 56, y: 22 },
+      region: "헤르난드",
+      coordinates: { x: 36.56, y: 66.52 },
+      worldCoordinates: {
+        lat: 0.58435886760613,
+        lng: -0.81771294688874,
+        matchedLabel: "Sword of the Lord",
+        sourceLabel: "crimsondesert.app 커뮤니티 맵"
+      },
       difficulty: "쉬움",
       recommended: "시작 직후",
       respawn: "상시 / 1회성 혼합",
       verification: {
-        status: "복수 영상 교차확인",
+        status: "커뮤니티 맵 앵커 + 영상 교차확인",
         confidence: "중간",
         lastChecked: "2026-04-08"
       },
       mapping: {
-        status: "다중 위치 묶음",
-        basis: "챕터 + 설명문",
-        note: "전설 양손검, 공짜 금괴, 방패 위치가 서로 다른 지점이라 현재는 초반 스타트 루트 묶음으로 관리합니다."
+        status: "대표 앵커 반영",
+        basis: "crimsondesert.app 커뮤니티 맵 + 유튜브 챕터",
+        verifiedAt: "2026-04-08",
+        note: "현재 마커는 커뮤니티 맵의 Sword of the Lord 좌표를 대표 앵커로 사용합니다. 금괴와 방패 루트는 여전히 별도 세부 위치로 분리할 여지가 있습니다."
       },
       items: [
         {
@@ -219,7 +255,7 @@ window.guideData = {
         }
       ],
       summary: "시작 직후 전투력을 빠르게 끌어올리는 입문용 스타트 루트입니다. 금괴, 방패, 전설 양손검이 한 묶음으로 자주 언급됩니다.",
-      locationGuide: "실제 위치는 각 챕터별로 따로 존재합니다. 현재는 입문자에게 우선순위가 높은 요소를 하나의 연구 마커로 모아둔 상태입니다.",
+      locationGuide: "실제 좌표는 헤르난드 지역의 Sword of the Lord 지점을 대표 앵커로 사용했습니다. 방패, 금괴, 양손검은 영상 챕터에 따라 다른 위치로 이어지므로 아직은 스타트 루트 묶음으로 해석하는 편이 안전합니다.",
       route: [
         "기본 준비물을 챙긴 뒤 방패나 제작용 시작점부터 확보합니다.",
         "그다음 공짜 금괴를 먼저 회수해 초반 자금을 마련합니다.",
@@ -422,20 +458,27 @@ window.guideData = {
       id: "magnet-pet-route",
       name: "자석펫 영입 루트",
       category: "utility",
-      region: "회색갈기",
-      coordinates: { x: 24, y: 63 },
+      region: "헤르난드",
+      coordinates: { x: 37.13, y: 68.87 },
+      worldCoordinates: {
+        lat: 0.56793122587133,
+        lng: -0.8138088354882,
+        matchedLabel: "Pet Shop",
+        sourceLabel: "crimsondesert.app 커뮤니티 맵"
+      },
       difficulty: "중간",
       recommended: "파밍 효율 최우선",
       respawn: "상시 / 조건형",
       verification: {
-        status: "챕터 확인 + 보조 출처 존재",
+        status: "커뮤니티 맵 앵커 + 영상 교차확인",
         confidence: "중간",
         lastChecked: "2026-04-08"
       },
       mapping: {
-        status: "좌표 임시 배치",
-        basis: "챕터 + 키워드",
-        note: "반려동물 영입과 회색갈기의 새로운 이빨 챕터를 기준으로 대표 마커를 분리했습니다. 실제 위치는 프레임 검수 후 보정이 필요합니다."
+        status: "대표 앵커 반영",
+        basis: "crimsondesert.app 커뮤니티 맵 + 유튜브 챕터",
+        verifiedAt: "2026-04-08",
+        note: "정확한 자석펫 포인트는 아직 커뮤니티 맵에서 항목명이 직접 확인되지 않았습니다. 현재는 반려동물 루트와 가장 잘 맞는 Pet Shop 좌표를 대표 앵커로 사용합니다."
       },
       items: [
         {
@@ -449,7 +492,7 @@ window.guideData = {
         }
       ],
       summary: "자동 루팅 효율을 크게 올려주는 자석펫 확보용 개별 마커입니다.",
-      locationGuide: "현재는 회색갈기 키워드를 중심으로 배치한 임시 마커입니다. 실제 지점은 00:32 이후 반려동물 영입 구간과 03:51 회색갈기의 새로운 이빨 구간을 프레임 대조해 조정해야 합니다.",
+      locationGuide: "현재는 헤르난드 지역의 Pet Shop 좌표를 대표 마커로 사용합니다. 실제 지점은 00:32 이후 반려동물 영입 구간과 03:51 회색갈기의 새로운 이빨 구간을 프레임 대조해 세부 좌표를 더 좁혀야 합니다.",
       route: [
         "반려동물 영입 방법 챕터에서 첫 진입 랜드마크를 확인합니다.",
         "자동펫 활용법으로 기능을 검증합니다.",
@@ -473,20 +516,27 @@ window.guideData = {
       id: "big-bag-route",
       name: "특대형 가방 루트",
       category: "utility",
-      region: "영상 프레임 검수 필요",
-      coordinates: { x: 33, y: 68 },
+      region: "헤르난드",
+      coordinates: { x: 32.58, y: 61.91 },
+      worldCoordinates: {
+        lat: 0.61665775039881,
+        lng: -0.84518528148769,
+        matchedLabel: "Standard Inventory Expansion Tool",
+        sourceLabel: "crimsondesert.app 커뮤니티 맵"
+      },
       difficulty: "쉬움",
       recommended: "인벤 확장 우선",
       respawn: "상시 / 1회성 가능성",
       verification: {
-        status: "복수 영상 교차확인",
+        status: "커뮤니티 맵 앵커 + 영상 교차확인",
         confidence: "중간",
         lastChecked: "2026-04-08"
       },
       mapping: {
-        status: "좌표 임시 배치",
-        basis: "챕터 + 보조 출처",
-        note: "특대형 가방은 전용 영상과 종합 공략 영상 둘 다에서 언급됩니다. 실제 위치는 두 영상을 함께 보며 보정하는 것이 좋습니다."
+        status: "대표 앵커 반영",
+        basis: "crimsondesert.app 커뮤니티 맵 + 유튜브 챕터",
+        verifiedAt: "2026-04-08",
+        note: "현재는 커뮤니티 맵의 Standard Inventory Expansion Tool 좌표를 대표 앵커로 사용합니다. 특대형 가방 자체와 완전히 동일 지점인지 여부는 영상 프레임 검수로 더 좁힐 필요가 있습니다."
       },
       items: [
         {
@@ -500,7 +550,7 @@ window.guideData = {
         }
       ],
       summary: "파밍 지속 시간을 크게 늘려주는 10칸 인벤 확장 루트입니다.",
-      locationGuide: "현재는 대표 위치만 임시 배치했습니다. 06:27 이후 가방 구간과 종합 공략의 02:51 구간을 비교해 실제 랜드마크를 확인하면 좌표를 빠르게 확정할 수 있습니다.",
+      locationGuide: "현재는 헤르난드 지역의 인벤토리 확장 툴 좌표를 대표 위치로 사용합니다. 06:27 이후 가방 구간과 종합 공략의 02:51 구간을 비교해 실제 랜드마크를 확인하면 세부 좌표를 더 빠르게 확정할 수 있습니다.",
       route: [
         "가방 입수 구간에서 시작 랜드마크를 먼저 메모합니다.",
         "종합 공략 영상의 같은 주제 구간으로 위치를 교차 확인합니다.",
@@ -532,20 +582,27 @@ window.guideData = {
       id: "best-ring-route",
       name: "공속 4 반지 세팅 루트",
       category: "accessory",
-      region: "영상 프레임 검수 필요",
-      coordinates: { x: 84, y: 56 },
+      region: "데메니스",
+      coordinates: { x: 52.49, y: 42.26 },
+      worldCoordinates: {
+        lat: 0.75420860920458,
+        lng: -0.70784686173232,
+        matchedLabel: "Witch's Ring",
+        sourceLabel: "crimsondesert.app 커뮤니티 맵"
+      },
       difficulty: "중간",
       recommended: "세팅 최적화 단계",
       respawn: "획득처 확인 필요",
       verification: {
-        status: "제목 확인 / 자막 활용 예정",
-        confidence: "낮음",
+        status: "커뮤니티 맵 + 영상 제목/아이템명 대조",
+        confidence: "중간",
         lastChecked: "2026-04-08"
       },
       mapping: {
-        status: "좌표 임시 배치",
-        basis: "제목 + 아이템명",
-        note: "영상 설명에 챕터가 없어서 현재는 제목에 등장한 반지 이름과 세팅 목적만 확정 입력했습니다. 자막 기반 후속 분해가 필요합니다."
+        status: "월드 좌표 반영",
+        basis: "crimsondesert.app 커뮤니티 맵 + 영상 제목",
+        verifiedAt: "2026-04-08",
+        note: "대표 마커는 커뮤니티 맵의 Witch's Ring 좌표를 사용합니다. Mark of Darkness는 데메니스 인근의 별도 좌표(0.685124, -0.746593)로 후속 분리 후보입니다."
       },
       items: [
         {
@@ -577,7 +634,7 @@ window.guideData = {
         }
       ],
       summary: "공속 4 세팅을 목표로 반지 후보들을 모아둔 엔드세팅용 장신구 루트입니다.",
-      locationGuide: "현재는 정확 위치보다 어떤 반지를 추적해야 하는지에 초점을 맞춘 연구 마커입니다. 이후 자막과 프레임을 보며 반지별 획득처를 따로 뽑아내는 것이 핵심입니다.",
+      locationGuide: "현재 대표 위치는 데메니스 지역의 Witch's Ring 좌표로 고정했습니다. 이후 자막과 프레임을 보며 Witch's Ring, Mark of Darkness, Ring of Lighting을 각각 별도 마커로 분리하는 것이 핵심입니다.",
       route: [
         "우선 반지 이름 세 개를 기준으로 데이터베이스에 등록합니다.",
         "영상 자막에서 각 반지 언급 지점을 뽑아 개별 획득 루트를 만듭니다.",
@@ -601,20 +658,27 @@ window.guideData = {
       id: "white-horse-roiler",
       name: "전설의 백마 로일러",
       category: "mount",
-      region: "지역 다수",
-      coordinates: { x: 49, y: 77 },
+      region: "헤르난드",
+      coordinates: { x: 31.62, y: 45.07 },
+      worldCoordinates: {
+        lat: 0.734498,
+        lng: -0.851845,
+        matchedLabel: "Royler Legendary White Horse",
+        sourceLabel: "crimsondesert.app 커뮤니티 맵"
+      },
       difficulty: "중간",
       recommended: "이동 루트 확장용",
       respawn: "탈것 획득형",
       verification: {
-        status: "복수 영상 교차확인",
-        confidence: "중간",
+        status: "커뮤니티 맵 + 영상 교차확인",
+        confidence: "높음",
         lastChecked: "2026-04-08"
       },
       mapping: {
-        status: "좌표 임시 배치",
-        basis: "챕터 + 보조 출처",
-        note: "로일러 전용 마커입니다. 실제 위치는 00:25 이후 장면과 종합 공략의 07:08 구간을 함께 보며 보정하면 됩니다."
+        status: "월드 좌표 반영",
+        basis: "crimsondesert.app 커뮤니티 맵 + 유튜브 챕터",
+        verifiedAt: "2026-04-08",
+        note: "로일러는 커뮤니티 맵의 Royler Legendary White Horse 좌표를 현재 전체지도에 투영했습니다. 이후 영상 프레임과 지형 스크린샷으로 세부 착지 지점을 더 다듬을 수 있습니다."
       },
       items: [
         {
@@ -628,7 +692,7 @@ window.guideData = {
         }
       ],
       summary: "전설의 백마 로일러 획득을 위한 개별 마커입니다.",
-      locationGuide: "현재는 대표 위치만 임시 배치했습니다. 두 영상의 백마 구간을 대조해 정확한 지형 랜드마크를 찾으면 빠르게 좌표를 고정할 수 있습니다.",
+      locationGuide: "현재는 헤르난드 지역의 Royler Legendary White Horse 좌표를 기준으로 고정했습니다. 두 영상의 백마 구간을 대조해 정확한 지형 랜드마크를 찾으면 세부 위치를 더 정밀하게 다듬을 수 있습니다.",
       route: [
         "백마 챕터 시작 지점에서 첫 랜드마크를 메모합니다.",
         "보조 출처 영상에서 같은 지형이 나오는지 확인합니다.",
@@ -660,20 +724,27 @@ window.guideData = {
       id: "black-horse-rocade",
       name: "전설의 흑마 로케이드",
       category: "mount",
-      region: "지역 다수",
-      coordinates: { x: 57, y: 80 },
+      region: "데메니스",
+      coordinates: { x: 53.62, y: 52.86 },
+      worldCoordinates: {
+        lat: 0.68,
+        lng: -0.7,
+        matchedLabel: "Rokade (Legendary Horse)",
+        sourceLabel: "crimsondesert.app 커뮤니티 맵"
+      },
       difficulty: "중간",
       recommended: "이동 루트 확장용",
       respawn: "탈것 획득형",
       verification: {
-        status: "복수 영상 교차확인",
-        confidence: "중간",
+        status: "커뮤니티 맵 + 영상 교차확인",
+        confidence: "높음",
         lastChecked: "2026-04-08"
       },
       mapping: {
-        status: "좌표 임시 배치",
-        basis: "챕터 + 보조 출처",
-        note: "로케이드 전용 마커입니다. 실제 위치는 02:22 이후 장면과 종합 공략의 07:43 구간 대조가 필요합니다."
+        status: "월드 좌표 반영",
+        basis: "crimsondesert.app 커뮤니티 맵 + 유튜브 챕터",
+        verifiedAt: "2026-04-08",
+        note: "로케이드는 커뮤니티 맵의 Rokade (Legendary Horse) 좌표를 기준으로 고정했습니다. 영상에서 보이는 접근 루트와 지형 높낮이를 추가로 맞추면 더 정밀해집니다."
       },
       items: [
         {
@@ -687,7 +758,7 @@ window.guideData = {
         }
       ],
       summary: "전설의 흑마 로케이드 확보용 개별 마커입니다.",
-      locationGuide: "현재는 대표 위치만 배치했습니다. 흑마 챕터와 보조 출처를 함께 보며 정확한 맵 랜드마크를 잡아야 합니다.",
+      locationGuide: "현재는 데메니스 지역의 Rokade (Legendary Horse) 좌표를 기준으로 배치했습니다. 흑마 챕터와 보조 출처를 함께 보며 접근 방향까지 맞추면 실제 체감 위치를 더 좁힐 수 있습니다.",
       route: [
         "흑마 챕터에서 시작 지형과 이동 방향을 메모합니다.",
         "보조 출처 영상에서 같은 루트를 재확인합니다.",
@@ -719,20 +790,27 @@ window.guideData = {
       id: "red-horse-camora",
       name: "전설의 적토마 카모라",
       category: "mount",
-      region: "지역 다수",
-      coordinates: { x: 63, y: 75 },
+      region: "데메니스",
+      coordinates: { x: 60.87, y: 71.43 },
+      worldCoordinates: {
+        lat: 0.55,
+        lng: -0.65,
+        matchedLabel: "Camora (Legendary Horse)",
+        sourceLabel: "crimsondesert.app 커뮤니티 맵"
+      },
       difficulty: "중간",
       recommended: "이동 루트 확장용",
       respawn: "탈것 획득형",
       verification: {
-        status: "복수 영상 교차확인",
-        confidence: "중간",
+        status: "커뮤니티 맵 + 영상 교차확인",
+        confidence: "높음",
         lastChecked: "2026-04-08"
       },
       mapping: {
-        status: "좌표 임시 배치",
-        basis: "챕터 + 보조 출처",
-        note: "카모라 전용 마커입니다. 실제 위치는 04:18 이후 장면과 종합 공략의 07:53 구간을 대조해 보정해야 합니다."
+        status: "월드 좌표 반영",
+        basis: "crimsondesert.app 커뮤니티 맵 + 유튜브 챕터",
+        verifiedAt: "2026-04-08",
+        note: "카모라는 커뮤니티 맵의 Camora (Legendary Horse) 좌표를 기준으로 현재 전체지도에 투영했습니다. 적토마는 영상 랜드마크 대조 시 체감 위치를 더 세밀하게 다듬기 쉬운 편입니다."
       },
       items: [
         {
@@ -746,7 +824,7 @@ window.guideData = {
         }
       ],
       summary: "전설의 적토마 카모라 확보용 개별 마커입니다.",
-      locationGuide: "현재는 임시 위치입니다. 적토마 구간을 두 영상에서 대조하면 다른 두 말보다 빠르게 좌표를 좁힐 수 있습니다.",
+      locationGuide: "현재는 데메니스 지역의 Camora (Legendary Horse) 좌표를 기준으로 고정했습니다. 적토마 구간을 두 영상에서 대조하면 다른 두 말보다 빠르게 세부 좌표를 좁힐 수 있습니다.",
       route: [
         "적토마 챕터 시작 장면의 지형을 먼저 메모합니다.",
         "보조 출처에서 동일 지형을 찾아 루트를 비교합니다.",
