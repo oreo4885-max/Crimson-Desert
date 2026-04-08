@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>붉은사막 파밍 가이드</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Crimson Desert Farming Guide Prototype</p>
+        <h1>붉은사막 파밍 포인트를 맵 위에 직접 찍는 가이드 앱</h1>
+        <p class="hero-text">
+          유튜브 공략 영상을 근거로 아이템, 스킬, 탈것, 편의성 루트를 맵 위에 정리하는 형태의 MVP입니다.
+          현재는 실제 영상 기반 항목을 1차 반영했고, 좌표는 프레임 검수에 따라 계속 정밀화할 수 있게 구성했습니다.
+        </p>
+      </div>
+      <div class="hero-stats" id="heroStats"></div>
+    </header>
+
+    <section class="toolbar">
+      <label class="search-field">
+        <span>아이템 / 재료 검색</span>
+        <input id="searchInput" type="search" placeholder="예: 가죽, 철광석, 버섯">
+      </label>
+
+      <div class="toolbar-group">
+        <span class="toolbar-label">카테고리</span>
+        <div id="categoryChips" class="chip-row"></div>
+      </div>
+
+      <label class="select-field">
+        <span>지역</span>
+        <select id="regionSelect"></select>
+      </label>
+
+      <label class="toggle-field">
+        <span>좌표 보정</span>
+        <button id="mappingToggle" type="button" class="toggle-button" aria-pressed="false">보정 모드 끄기</button>
+      </label>
+
+      <label class="toggle-field">
+        <span>보정 내보내기</span>
+        <button id="exportOverrides" type="button" class="toggle-button">보정 JSON 복사</button>
+      </label>
+
+      <label class="toggle-field">
+        <span>보정 불러오기</span>
+        <button id="importOverrides" type="button" class="toggle-button ghost">보정 JSON 불러오기</button>
+        <input id="importOverridesInput" type="file" accept="application/json" class="hidden-input">
+      </label>
+    </section>
+
+    <main class="content-grid">
+      <section class="map-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Map Overview</p>
+            <h2>파밍 맵</h2>
+          </div>
+          <p class="panel-note">현재 일부 마커는 유튜브 챕터와 설명문 기준의 임시 좌표입니다. 실제 게임 맵 캡처와 대조해 좌표를 보정하면 됩니다.</p>
+        </div>
+
+        <div id="mapBoard" class="map-board">
+          <img class="map-image" src="assets/pywel-placeholder-map.svg" alt="붉은사막 샘플 맵">
+          <div id="mapMarkers" class="marker-layer" aria-live="polite"></div>
+        </div>
+
+        <div id="legend" class="legend"></div>
+      </section>
+
+      <aside class="detail-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Spot Details</p>
+            <h2>위치 설명</h2>
+          </div>
+        </div>
+        <div id="detailCard" class="detail-card"></div>
+      </aside>
+
+      <section class="list-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Farming Routes</p>
+            <h2>파밍 포인트 목록</h2>
+          </div>
+          <p id="resultsCount" class="panel-note"></p>
+        </div>
+        <div id="spotList" class="spot-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data/guideData.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

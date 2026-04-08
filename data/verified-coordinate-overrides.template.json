@@ -1,0 +1,36 @@
+{
+  "exportedAt": "2026-04-08T00:00:00.000Z",
+  "source": "crimson-desert-map-overrides-v1",
+  "overrides": [
+    {
+      "id": "magnet-pet-route",
+      "name": "자석펫 영입 루트",
+      "coordinates": {
+        "x": 24.0,
+        "y": 63.0
+      },
+      "mappingStatus": "좌표 보정 중",
+      "verifiedAt": null
+    },
+    {
+      "id": "big-bag-route",
+      "name": "특대형 가방 루트",
+      "coordinates": {
+        "x": 33.0,
+        "y": 68.0
+      },
+      "mappingStatus": "좌표 보정 중",
+      "verifiedAt": null
+    },
+    {
+      "id": "white-horse-roiler",
+      "name": "전설의 백마 로일러",
+      "coordinates": {
+        "x": 49.0,
+        "y": 77.0
+      },
+      "mappingStatus": "좌표 보정 중",
+      "verifiedAt": null
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1000" fill="#1C1411"/>
+  <path d="M72 142C203 85 355 65 488 109C612 150 730 116 839 130C1045 156 1131 57 1295 91C1426 119 1496 219 1532 317C1577 439 1572 566 1504 664C1445 749 1429 858 1291 900C1132 949 952 869 825 842C638 803 559 897 348 892C199 888 69 820 38 702C11 597 42 505 66 407C92 302 -28 203 72 142Z" fill="url(#paint0_linear)"/>
+  <path d="M101 275C177 227 270 210 362 230C451 250 517 287 607 272C744 248 816 194 985 236C1116 268 1190 220 1289 262C1375 298 1466 387 1454 506C1442 624 1337 706 1241 756C1125 816 1029 786 912 763C761 735 643 763 523 797C428 824 316 835 215 786C96 728 31 617 47 505C59 419 39 315 101 275Z" fill="#2B211C" fill-opacity="0.76"/>
+  <path d="M303 141L419 352L255 470L117 275L303 141Z" fill="#6B7FA8" fill-opacity="0.22"/>
+  <path d="M997 173L1247 181L1372 326L1288 489L1071 489L968 302L997 173Z" fill="#B45B3F" fill-opacity="0.2"/>
+  <path d="M1211 630L1402 662L1464 813L1305 887L1148 821L1108 700L1211 630Z" fill="#7E9C6B" fill-opacity="0.18"/>
+  <path d="M659 346L864 334L959 471L848 621L653 606L596 470L659 346Z" fill="#9E7B4B" fill-opacity="0.17"/>
+  <path d="M405 423L563 525L528 677L333 720L247 596L281 479L405 423Z" fill="#79A389" fill-opacity="0.2"/>
+  <path d="M435 162C486 141 538 162 587 181" stroke="#D8B77C" stroke-opacity="0.42" stroke-width="10" stroke-linecap="round"/>
+  <path d="M623 755C703 719 771 687 890 708C1041 735 1112 828 1229 842" stroke="#E2D3B0" stroke-opacity="0.18" stroke-width="12" stroke-linecap="round" stroke-dasharray="10 18"/>
+  <path d="M772 184C723 279 688 349 691 418C694 511 752 606 831 680" stroke="#F3E8D7" stroke-opacity="0.14" stroke-width="10" stroke-linecap="round"/>
+  <path d="M934 710C989 649 1048 601 1145 595C1206 591 1257 607 1326 655" stroke="#F3E8D7" stroke-opacity="0.14" stroke-width="10" stroke-linecap="round"/>
+  <text x="161" y="228" fill="#F1E6D5" fill-opacity="0.9" font-family="Georgia, serif" font-size="42" font-weight="700">서리 협곡</text>
+  <text x="344" y="586" fill="#F1E6D5" fill-opacity="0.92" font-family="Georgia, serif" font-size="44" font-weight="700">안개숲</text>
+  <text x="688" y="501" fill="#F1E6D5" fill-opacity="0.92" font-family="Georgia, serif" font-size="46" font-weight="700">회색 요새</text>
+  <text x="1096" y="347" fill="#F1E6D5" fill-opacity="0.92" font-family="Georgia, serif" font-size="44" font-weight="700">붉은 황야</text>
+  <text x="1168" y="805" fill="#F1E6D5" fill-opacity="0.92" font-family="Georgia, serif" font-size="44" font-weight="700">해무 해안</text>
+  <text x="78" y="948" fill="#F1E6D5" fill-opacity="0.58" font-family="Georgia, serif" font-size="28">Sample Map for UI Planning Only</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="800" y1="91" x2="800" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#403029"/>
+      <stop offset="1" stop-color="#2A1E19"/>
+    </linearGradient>
+  </defs>
+</svg>
