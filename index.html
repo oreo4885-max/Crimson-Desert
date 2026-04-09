@@ -10,92 +10,44 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="page-shell">
-    <header class="hero">
-      <div class="hero-copy">
-        <p id="heroEyebrow" class="eyebrow">Crimson Desert Field Atlas</p>
-        <h1 id="heroTitle">유튜브 공략을 월드맵 좌표로 번역한 붉은사막 파밍 아틀라스</h1>
-        <p id="heroText" class="hero-text">
-          파이웰 전체지도 위에 무기, 장신구, 편의 아이템, 전설 탈것 루트를 정리했습니다. 실제 월드 좌표가 확인된 포인트는 검증 마커로 고정하고, 아직 분해가 덜 된 항목은 영상 챕터 기반 연구 포인트로 남겨두었습니다.
-        </p>
-        <div id="heroHighlights" class="hero-highlights"></div>
-        <p id="heroNote" class="hero-note"></p>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="title-block">
+        <p class="eyebrow">Crimson Desert Atlas</p>
+        <h1 id="appTitle">붉은사막 파밍 아틀라스</h1>
+        <p id="appSubtitle" class="subtitle">점에 마우스를 올리면 아이템을 확인하고, 클릭하면 우측에서 확대된 세부 위치를 봅니다.</p>
       </div>
-      <div class="hero-stats" id="heroStats"></div>
+
+      <div class="topbar-actions">
+        <label class="search-shell" aria-label="아이템 검색">
+          <input id="searchInput" type="search" placeholder="아이템 / 스팟 검색">
+        </label>
+        <a id="mapSourceLink" class="source-link" href="#" target="_blank" rel="noreferrer">원본 맵</a>
+      </div>
     </header>
 
-    <section class="toolbar">
-      <label class="search-field">
-        <span>아이템 / 재료 검색</span>
-        <input id="searchInput" type="search" placeholder="예: 검은 운명, 로일러, 특대형 가방">
-      </label>
-
-      <div class="toolbar-group">
-        <span class="toolbar-label">카테고리</span>
-        <div id="categoryChips" class="chip-row"></div>
-      </div>
-
-      <label class="select-field">
-        <span>지역</span>
-        <select id="regionSelect"></select>
-      </label>
-
-      <label class="toggle-field">
-        <span>좌표 보정</span>
-        <button id="mappingToggle" type="button" class="toggle-button" aria-pressed="false">보정 모드 끄기</button>
-      </label>
-
-      <label class="toggle-field">
-        <span>보정 내보내기</span>
-        <button id="exportOverrides" type="button" class="toggle-button">보정 JSON 복사</button>
-      </label>
-
-      <label class="toggle-field">
-        <span>보정 불러오기</span>
-        <button id="importOverrides" type="button" class="toggle-button ghost">보정 JSON 불러오기</button>
-        <input id="importOverridesInput" type="file" accept="application/json" class="hidden-input">
-      </label>
-    </section>
-
-    <main class="content-grid">
-      <section class="map-panel">
-        <div class="panel-header">
+    <main class="atlas-grid">
+      <section class="world-panel">
+        <div class="panel-head">
           <div>
-            <p class="panel-kicker">Map Overview</p>
-            <h2>파이웰 전체지도</h2>
+            <p class="eyebrow">World Map</p>
+            <h2>파이웰 전체 대륙 지도</h2>
           </div>
-          <p id="mapNote" class="panel-note">공개 커뮤니티 맵 타일을 재구성한 실제 월드 지도를 표시합니다. 일부 포인트는 아직 영상 기반 연구 좌표이며, 검증 마커는 월드 좌표를 현재 지도에 투영한 값입니다.</p>
+          <p id="resultsCount" class="results-count"></p>
         </div>
 
-        <div id="mapBoard" class="map-board">
-          <img id="mapImage" class="map-image" src="assets/pywel-main-world-z11.jpg" alt="붉은사막 파이웰 전체지도" draggable="false">
-          <div id="mapMarkers" class="marker-layer" aria-live="polite"></div>
+        <div id="worldMap" class="world-map">
+          <img id="worldImage" class="world-image" src="assets/pywel-main-world-z11.jpg" alt="붉은사막 파이웰 전체지도" draggable="false">
+          <div id="worldMarkers" class="marker-layer" aria-live="polite"></div>
         </div>
-        <div id="mapCaption" class="map-caption"></div>
 
-        <div id="legend" class="legend"></div>
+        <div class="legend-wrap">
+          <p class="legend-label">범례</p>
+          <div id="legend" class="legend"></div>
+        </div>
       </section>
 
-      <aside class="detail-panel">
-        <div class="panel-header">
-          <div>
-            <p class="panel-kicker">Spot Briefing</p>
-            <h2>루트 브리핑</h2>
-          </div>
-        </div>
-        <div id="detailCard" class="detail-card"></div>
-      </aside>
-
-      <section class="list-panel">
-        <div class="panel-header">
-          <div>
-            <p class="panel-kicker">Research Board</p>
-            <h2>파밍 포인트 보드</h2>
-          </div>
-          <p id="resultsCount" class="panel-note"></p>
-        </div>
-        <div id="spotList" class="spot-list"></div>
-      </section>
+      <aside id="focusPanel" class="focus-panel"></aside>
     </main>
   </div>
 
